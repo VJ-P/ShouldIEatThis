@@ -1,3 +1,7 @@
+<%- include("partials/header") %>
+
+<a href="/recipes/new">Add New Recipe</a>
+
 <h1>This is the recipes page</h1>
 
 <% recipes.forEach((recipe) => { %>
@@ -6,3 +10,5 @@
         <img src="<%= recipe.image %>">
     </div>
 <% }); %>
+
+<%- include("partials/footer") %>
