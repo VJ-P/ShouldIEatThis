@@ -1,14 +1,28 @@
 <%- include("partials/header") %>
 
-<a href="/recipes/new">Add New Recipe</a>
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome to ShouldIEatThis?</h1>
+            <p>View our hand-picked recipes from all over the world</p>
+            <p>
+                <a class="btn btn-danger btn-lg"  href="/recipes/new">Add New Recipe</a>
+            </p>
+        </div>
+    </header>
 
-<h1>This is the recipes page</h1>
-
-<% recipes.forEach((recipe) => { %>
-    <div>
-        <h4><%= recipe.name %></h4>
-        <img src="<%= recipe.image %>">
+    <div class="row text-center" style="display: flex; flex-wrap: wrap;">
+        <% recipes.forEach((recipe) => { %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <img src="<%= recipe.image %>">
+                    <div class="caption">
+                        <h4><%= recipe.name %></h4>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
     </div>
-<% }); %>
+</div>
 
 <%- include("partials/footer") %>

@@ -6,7 +6,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 let recipes = [
-    {name: "Pizza", image: "https://bit.ly/3dRrhjv"},
+    {name: "Pizza", image: "https://bit.ly/2weGHgx"},
+    {name: "Pecan Pie", image: "https://bit.ly/2X7DDhm"},
+    {name: "Bacon and Eggs", image: "https://bit.ly/39Jmopg"},
+    {name: "Pizza", image: "https://bit.ly/2weGHgx"},
+    {name: "Pecan Pie", image: "https://bit.ly/2X7DDhm"},
+    {name: "Bacon and Eggs", image: "https://bit.ly/39Jmopg"},
+    {name: "Pizza", image: "https://bit.ly/2weGHgx"},
     {name: "Pecan Pie", image: "https://bit.ly/2X7DDhm"},
     {name: "Bacon and Eggs", image: "https://bit.ly/39Jmopg"}
 ];
