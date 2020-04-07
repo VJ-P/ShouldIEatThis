@@ -1,36 +1,63 @@
-const bodyParser = require('body-parser');
-const express = require('express');
-const app = express();
+const   bodyParser = require('body-parser'),
+        express = require('express'),
+        mongoose = require('mongoose'),
+        app = express();
+
+mongoose.connect("mongodb://localhost/should_i_eat_this");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-let recipes = [
-    {name: "Pizza", image: "https://bit.ly/2weGHgx"},
-    {name: "Pecan Pie", image: "https://bit.ly/2X7DDhm"},
-    {name: "Bacon and Eggs", image: "https://bit.ly/39Jmopg"},
-    {name: "Pizza", image: "https://bit.ly/2weGHgx"},
-    {name: "Pecan Pie", image: "https://bit.ly/2X7DDhm"},
-    {name: "Bacon and Eggs", image: "https://bit.ly/39Jmopg"},
-    {name: "Pizza", image: "https://bit.ly/2weGHgx"},
-    {name: "Pecan Pie", image: "https://bit.ly/2X7DDhm"},
-    {name: "Bacon and Eggs", image: "https://bit.ly/39Jmopg"}
-];
+// SCHEMA SETUP
+let recipeSchema = new mongoose.Schema({
+    name: String,
+    image: String
+});
+
+let Recipe = mongoose.model("Recipe", recipeSchema);
+
+// Recipe.create(
+//     {
+//         name: "Pecan Pie", 
+//         image: "https://bit.ly/2X7DDhm"
+//     },
+//     (err, recipe) => {
+//         if(err) {
+//             console.log(err);
+//         } else {
+//             console.log("New Recipe");
+//             console.log(recipe);
+//         }
+//     }
+// );
+
 
 app.get("/", (req, res) => {
     res.render("landing");
 });
 
 app.get("/recipes", (req, res) => {
-    res.render("recipes", {recipes: recipes});
+    Recipe.find({}, (err, allRecipes) => {
+        if(err) {
+            console.log(err);
+        } else {
+            res.render("recipes", {recipes: allRecipes});
+        }
+    })
 });
 
 app.post("/recipes", (req, res) => {
     let name = req.body.name;
     let image = req.body.image;
     let newRecipe = {name: name, image: image};
-    recipes.push(newRecipe);
-    res.redirect("/recipes");
+
+    Recipe.create(newRecipe, (err, newlyCreated) => {
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/recipes");
+        }
+    });
 });
 
 app.get("/recipes/new", (req, res) => {
