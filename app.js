@@ -1,9 +1,11 @@
 const   bodyParser = require('body-parser'),
         express = require('express'),
         mongoose = require('mongoose'),
-        Recipe = require('./models/recipe')
+        Recipe = require('./models/recipe'),
+        seedDB = require("./seeds"),
         app = express();
 
+seedDB();
 mongoose.connect("mongodb://localhost:27017/should_i_eat_this", {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(bodyParser.urlencoded({extended: true}));
