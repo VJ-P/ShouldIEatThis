@@ -11,22 +11,6 @@ mongoose.connect("mongodb://localhost:27017/should_i_eat_this", {useNewUrlParser
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-// Recipe.create(
-//     {
-//         name: "Pizza",
-//         image: "https://bit.ly/2weGHgx",
-//         description: "This is a fantastic version of an Italian classic. The feta cheese adds a rich flavor that brings this dish to life. Incredibly easy and incredibly delicious!"
-//     },
-//     (err, recipe) => {
-//         if(err) {
-//             console.log(err);
-//         } else {
-//             console.log("Newly Created Recipe");
-//             console.log(recipe);
-//         }
-//     }
-// );
-
 app.get("/", (req, res) => {
     res.render("landing");
 });
@@ -66,11 +50,12 @@ app.get("/recipes/new", (req, res) => {
 // SHOW ROUTE - Shows more info about a recipe
 app.get("/recipes/:id", (req, res) => {
     // find the recipe with the provided ID
-    Recipe.findById(req.params.id, (err, foundRecipe) => {
+    Recipe.findById(req.params.id).populate("comments").exec((err, foundRecipe) => {
         if(err) {
             console.log(err);
         } else {
             // render show template with that recipe
+            console.log(foundRecipe);
             res.render("show", {recipe: foundRecipe});
         }
     });
