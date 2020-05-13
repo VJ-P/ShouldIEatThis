@@ -1,21 +1,13 @@
 const   bodyParser = require('body-parser'),
         express = require('express'),
         mongoose = require('mongoose'),
+        Recipe = require('./models/recipe')
         app = express();
 
 mongoose.connect("mongodb://localhost:27017/should_i_eat_this", {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
-
-// SCHEMA SETUP
-let recipeSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-let Recipe = mongoose.model("Recipe", recipeSchema);
 
 // Recipe.create(
 //     {
