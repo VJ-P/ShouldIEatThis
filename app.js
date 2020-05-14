@@ -21,7 +21,7 @@ app.get("/recipes", (req, res) => {
         if(err) {
             console.log(err);
         } else {
-            res.render("index", {recipes: allRecipes});
+            res.render("recipes/index", {recipes: allRecipes});
         }
     })
 });
@@ -44,7 +44,7 @@ app.post("/recipes", (req, res) => {
 
 // NEW ROUTE - Shwos form to submit new recipe
 app.get("/recipes/new", (req, res) => {
-    res.render("new");
+    res.render("recipes/new");
 });
 
 // SHOW ROUTE - Shows more info about a recipe
@@ -55,11 +55,26 @@ app.get("/recipes/:id", (req, res) => {
             console.log(err);
         } else {
             // render show template with that recipe
-            console.log(foundRecipe);
-            res.render("show", {recipe: foundRecipe});
+            res.render("recipes/show", {recipe: foundRecipe});
         }
     });
 });
+
+//============================================================
+// COMMENTS ROUTES
+//============================================================
+app.get("/recipes/:id/comments/new", (req, res) => {
+    // find recipe by id
+    Recipe.findById(req.params.id, (err, recipe) => {
+        if(err){
+            console.log(err);
+        } else {
+            res.render("comments/new", {recipe: recipe});
+        }
+    });
+});
+
+
 
 app.listen(3000, () =>{
     console.log("The ShouldIEatThis server is now running on Port 3000!");

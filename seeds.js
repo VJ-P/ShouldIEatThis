@@ -27,23 +27,18 @@ let seeds = [
  
 async function seedDB(){
     try {
-        await Recipe.remove({});
-        console.log('Recipes removed');
-        await Comment.remove({});
-        console.log('Comments removed');
+        await Recipe.deleteMany({});
+        await Comment.deleteMany({});
         for(const seed of seeds){
             let recipe = await Recipe.create(seed);
-            console.log('Recipe created');
             let comment = await Comment.create(
                 {
                     text: 'This recipe is great, but it was a bit salty',
                     author: 'Homer'
                 }
             )
-            console.log('Comment created');
             recipe.comments.push(comment);
             recipe.save();
-            console.log('Comment added to recipe');
         }
     } catch (error) {
         console.log(error);
