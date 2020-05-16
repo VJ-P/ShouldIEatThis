@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
     res.render("landing");
 });
 
-// INDEX ROUTE
+// INDEX ROUTE - Shows a list of all the recipes
 app.get("/recipes", (req, res) => {
     Recipe.find({}, (err, allRecipes) => {
         if(err) {
@@ -27,12 +27,17 @@ app.get("/recipes", (req, res) => {
     })
 });
 
-// CREATE ROUTE - Shows a list of all the recipes
+// CREATE ROUTE 
 app.post("/recipes", (req, res) => {
     let name = req.body.name;
     let image = req.body.image;
     let description = req.body.description;
-    let newRecipe = {name: name, image: image, description: description};
+    let step1 = req.body.step1;
+    let step2 = req.body.step2;
+    let step3 = req.body.step3;
+    let step4 = req.body.step4;
+    let step5 = req.body.step5;
+    let newRecipe = {name: name, image: image, description: description, step1: step1, step2: step2, step3: step3, step4: step4, step5: step5};
 
     Recipe.create(newRecipe, (err, newlyCreated) => {
         if(err){
