@@ -2,6 +2,7 @@ const   bodyParser = require('body-parser'),
         express = require('express'),
         mongoose = require('mongoose'),
         Recipe = require('./models/recipe'),
+        Comment = require('./models/comment'),
         seedDB = require("./seeds"),
         app = express();
 
@@ -74,6 +75,24 @@ app.get("/recipes/:id/comments/new", (req, res) => {
     });
 });
 
+app.post("/recipes/:id/comments", (req, res) => {
+    Recipe.findById(req.params.id, (err, recipe) => {
+        if (err){
+            console.log(err);
+            res.redirect("/recipes");
+        } else {
+            Comment.create(req.body.comment, (err, comment) => {
+                if (err){
+                    console.log(err);
+                } else {
+                    recipe.comments.push(comment);
+                    recipe.save();
+                    res.redirect("/recipes/"+recipe._id);
+                }
+            });
+        };
+    });
+});
 
 
 app.listen(3000, () =>{
